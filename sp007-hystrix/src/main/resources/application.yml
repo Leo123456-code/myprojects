@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: hystrix
+    
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka
+
+ribbon:
+  MaxAutoRetriesNextServer: 2
+  MaxAutoRetries: 1
+  OkToRetryOnAllOperations: true
+  
+management:
+  endpoints:
+    web:
+      exposure:
+#        include: "*" # 暴露全部监控端点
+        include: "hystrix.stream" # 暴露全部监控端点
+
+
+---
+spring:
+  profiles: ribbon1
+  
+server:
+  port: 3001
+
+---
+spring:
+  profiles: ribbon2
+  
+server:
+  port: 3002
+  
